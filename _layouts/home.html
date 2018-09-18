@@ -1,0 +1,63 @@
+---
+layout: compress
+---
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"><!--<![endif]-->
+<head>
+    {% include head.html %}
+</head>
+<body>
+    {% include nav.html %}
+    <!-- Header -->
+    <header class="header flex" role="banner">
+        <div class="container animated fadeIn">
+            <div class="row">
+                    <a href="{{ site.url }}">
+                        <img src="{{ site.url }}/{{ site.logo }}" class="img-circle zoombtn animated rotateIn">
+                    </a>
+                    <h3 class="title">
+                        <a class="zoombtn hover-red" href="{{ site.url }}">
+                        	<p style="font-size:1.2rem;font-weight:700">{{ site.title }}</p>
+			            </a>
+                    </h3>
+                    <hr class="hr-line">
+                    <h3 class="title">
+                        <a class="hover-red" href="{{ site.url }}">
+                        	<p style="font-size:1rem;font-weight:300">{{ site.bio }}</p>
+			            </a>
+                    </h3>
+                    <hr class="hr-line">
+                    <h3 class="title">
+                        <a class="btn zoombtn" href="{{ site.url }}/about">
+                        关于
+                        </a>
+                        <a class="btn zoombtn" href="{{ site.url }}/articles">
+                        文章
+                        </a>
+                        <a class="btn zoombtn" href="{{ site.url }}/projects">
+                        项目
+                        </a>
+                        <a class="btn zoombtn" href="{{ site.url }}/tags">
+                        标签
+                        </a>
+                    </h3>
+                    <hr class="hr-line">
+                    <h3 class="title">
+                        <a class="hover-red" href="https://blog.damien.ink/moments">
+                            点击查看个人说说动态
+                        </a>
+                    </h3>
+                    {% include social-links.html %}
+                    <hr class="hr-line">
+                    <a href="https://pages.coding.me">
+                    <img alt="Hosted by Coding Pages" src="https://dn-coding-net-production-static.qbox.me/static/fbaf53c3aad0d2346a81107b400e8071.png">
+                    </a>
+            </div>
+        </div>
+    </header>
+    {% include scripts.html %}
+</body>
+</html>

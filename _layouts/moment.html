@@ -1,0 +1,44 @@
+---
+layout: compress
+---
+<!-- This file is only for moment pages -->
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"><!--<![endif]-->
+<head>
+    {% include head.html %}
+</head>
+<body>
+    {% include nav.html %}
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="wrapper animated fadeIn">
+            <div class="content">
+                <div class="post-title {% if page.feature %} feature {% endif %}">
+                    <h1>{{ page.date | date: "%Y年%m月%d日" }} - 说说</h1>
+                    {% if page.moment %}
+                    <a class="btn zoombtn" href="{{site.url}}/moments">
+                    {% endif %}
+                        <i class="fa fa-chevron-left"></i> 说说列表
+                    </a>
+                </div>
+                <p>{{ page.excerpt }}</p>
+                {{ content }}
+                <div class="entry-meta">
+                {% include meta.html %}
+                </div>
+            </div>
+        </div>
+ {% if page.comments and site.global_comments_on %}
+<section id="livere_thread" class="animated fadeInUp">{% include social_comments.html %}</section>
+<!-- /#livere_thread -->{% endif %}
+    </header>
+    {% include scripts.html %}
+    {% if site.mathjax == true %}
+    <!-- MathJax -->
+    <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    {% endif %}
+</body>
+</html>
