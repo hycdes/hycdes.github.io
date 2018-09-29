@@ -153,6 +153,9 @@
                     allEntry++;
                 }
             }
+            if (allEntry === 0) {
+                tab += "<tr><td>没有符合条件的后勤</td></tr>";
+            }
             tab += "</tbody>";
             chart.innerHTML = tab;
         }
