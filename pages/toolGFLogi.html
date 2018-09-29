@@ -82,22 +82,76 @@
             var Rw = document.getElementById('Rw'); Rw.value = 0;
             var Pw = document.getElementById('Pw'); Pw.value = 1;
         }
-        function getChart(logiList) {
+        function haveItem(it1, it2, logiDataEntry) {
+            var validNum = 0;
+            if (it1 === it2) {
+                if (it1 === 0) {
+                    validNum += 2;
+                } else {
+                    if ((logiDataEntry.itm1 === "人型契约" || logiDataEntry.itm2 === "人型契约") && it1 === 1) {
+                        validNum += 2;
+                    } else if ((logiDataEntry.itm1 === "装备契约" || logiDataEntry.itm2 === "装备契约") && it1 === 2) {
+                        validNum += 2;
+                    } else if ((logiDataEntry.itm1 === "快速建造" || logiDataEntry.itm2 === "快速建造") && it1 === 3) {
+                        validNum += 2;
+                    } else if ((logiDataEntry.itm1 === "快速修复" || logiDataEntry.itm2 === "快速修复") && it1 === 4) {
+                        validNum += 2;
+                    } else if ((logiDataEntry.itm1 === "采购币" || logiDataEntry.itm2 === "采购币") && it1 === 5) {
+                        validNum += 2;
+                    }
+                }
+            } else {
+                if (it1 === 0 || it2 === 0) {
+                    validNum++;
+                }
+                if ((logiDataEntry.itm1 === "人型契约") && (it1 === 1 || it2 === 1)) {
+                    validNum++;
+                } else if ((logiDataEntry.itm1 === "装备契约") && (it1 === 2 || it2 === 2)) {
+                    validNum++;
+                } else if ((logiDataEntry.itm1 === "快速建造") && (it1 === 3 || it2 === 3)) {
+                    validNum++;
+                } else if ((logiDataEntry.itm1 === "快速修复") && (it1 === 4 || it2 === 4)) {
+                    validNum++;
+                } else if ((logiDataEntry.itm1 === "采购币") && (it1 === 5 || it2 === 5)) {
+                    validNum++;
+                }
+                if ((logiDataEntry.itm2 === "人型契约") && (it1 === 1 || it2 === 1)) {
+                    validNum++;
+                } else if ((logiDataEntry.itm2 === "装备契约") && (it1 === 2 || it2 === 2)) {
+                    validNum++;
+                } else if ((logiDataEntry.itm2 === "快速建造") && (it1 === 3 || it2 === 3)) {
+                    validNum++;
+                } else if ((logiDataEntry.itm2 === "快速修复") && (it1 === 4 || it2 === 4)) {
+                    validNum++;
+                } else if ((logiDataEntry.itm2 === "采购币") && (it1 === 5 || it2 === 5)) {
+                    validNum++;
+                }
+            }
+            if (validNum === 2) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function getChart(logiList, it1, it2) {
             var chart = document.getElementById("rankingChart");
             var tab = "<thead><tr><th>排行</th><th>关卡</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>道具1</th><th>道具2</th><th>时间(h)</th></tr></thead>";
             tab += "<tbody>";
-            for (var i = 0; i < 10; i++) {
-                tab += "<tr>";
-                tab += "<td>"; tab += ((i + 1) + ""); tab += "</td>";
-                tab += "<td>"; tab += logiList[i].level; tab += "</td>";
-                tab += "<td>"; tab += (logiList[i].mpw + ""); tab += "</td>";
-                tab += "<td>"; tab += (logiList[i].amm + ""); tab += "</td>";
-                tab += "<td>"; tab += (logiList[i].rat + ""); tab += "</td>";
-                tab += "<td>"; tab += (logiList[i].prt + ""); tab += "</td>";
-                tab += "<td>"; tab += logiList[i].itm1; tab += "</td>";
-                tab += "<td>"; tab += logiList[i].itm2; tab += "</td>";
-                tab += "<td>"; tab += (logiList[i].time + ""); tab += "</td>";
-                tab += "</tr>";
+            for (var i = 0, allEntry = 0; i < 44 && allEntry < 10; i++) {
+                if (haveItem(it1, it2, logiList[i])) {
+                    tab += "<tr>";
+                    tab += "<td>"; tab += ((allEntry + 1) + ""); tab += "</td>";
+                    tab += "<td>"; tab += logiList[i].level; tab += "</td>";
+                    tab += "<td>"; tab += (logiList[i].mpw + ""); tab += "</td>";
+                    tab += "<td>"; tab += (logiList[i].amm + ""); tab += "</td>";
+                    tab += "<td>"; tab += (logiList[i].rat + ""); tab += "</td>";
+                    tab += "<td>"; tab += (logiList[i].prt + ""); tab += "</td>";
+                    tab += "<td>"; tab += logiList[i].itm1; tab += "</td>";
+                    tab += "<td>"; tab += logiList[i].itm2; tab += "</td>";
+                    tab += "<td>"; tab += (logiList[i].time + ""); tab += "</td>";
+                    tab += "</tr>";
+                    allEntry++;
+                }
             }
             tab += "</tbody>";
             chart.innerHTML = tab;
@@ -107,6 +161,12 @@
             var Aw = document.getElementById('Aw');
             var Rw = document.getElementById('Rw');
             var Pw = document.getElementById('Pw');
+            var Itm1 = document.getElementById('ItemNeed1');
+            var idx1 = Itm1.selectedIndex;
+            var it1 = parseInt(Itm1[idx1].value);
+            var Itm2 = document.getElementById('ItemNeed2');
+            var idx2 = Itm2.selectedIndex;
+            var it2 = parseInt(Itm2[idx2].value);
             var logiList = [];
             logiList.push(creatLogiData("0-1", 0, 174, 174, 0, "快速修复", "快速建造", 0.83));
             logiList.push(creatLogiData("0-2", 183.3, 0, 0, 116.7, "人型契约", "—", 3));
@@ -163,7 +223,7 @@
                 }
                 else return 1;
             });
-            getChart(logiList);
+            getChart(logiList, it1, it2);
         }
     </script>
 
@@ -397,6 +457,9 @@
                                     </ul>
                                 </li>
                                 <li>
+                                    <a href="git.html">git</a>
+                                </li>
+                                <li>
                                     <a href="basicAlgo.html">基本算法</a>
                                 </li>
                             </ul>
@@ -458,7 +521,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <h4>快捷配比</h4>
                             <p>
                                 <button type="button" class="btn btn-default" onclick="setWeight1()">等比1:1:1:1</button>
@@ -475,8 +538,28 @@
                                 <button type="button" class="btn btn-default" onclick="setWeightR()">口粮排序</button>
                                 <button type="button" class="btn btn-default" onclick="setWeightP()">零件排序</button>
                             </p>
-                            <p>&nbsp</p>
-                            <p><button type="button" class="btn btn-info" onclick="getRanking()">按配比排序</button></p>
+                            <h4>必需道具</h4>
+                            <p>
+                                <select class="form-control" id="ItemNeed1">
+                                    <option value=0>无</option>
+                                    <option value=1>人型契约</option>
+                                    <option value=2>装备契约</option>
+                                    <option value=3>快速建造</option>
+                                    <option value=4>快速修复</option>
+                                    <option value=5>采购币</option>
+                                </select>
+                            </p>
+                            <p>
+                                <select class="form-control" id="ItemNeed2">
+                                    <option value=0>无</option>
+                                    <option value=1>人型契约</option>
+                                    <option value=2>装备契约</option>
+                                    <option value=3>快速建造</option>
+                                    <option value=4>快速修复</option>
+                                    <option value=5>采购币</option>
+                                </select>
+                            </p>
+                            <p><button type="button" class="btn btn-info" onclick="getRanking()">按条件排序</button></p>
                         </div>
                     </form>
                 </div>

@@ -274,17 +274,46 @@
         <!-- Main Pages -->
         <div id="page-wrapper">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">Flash</h1>
-                    </div>
-                </div>
 
-                <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <embed src="../flash/MainFlash.swf" width="1024" height="768">
+                        <h1 class="page-header">git</h1>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                git开始使用和基本方法
+                            </div>
+                            <div class="panel-body">
+                                <p><b>(1) 本机首次使用git需要设定上自己的github帐号：</b></p>
+                                <p>git config --global user.name 'xxxxx'</p>
+                                <p>git config --global user.email 'xxx@xx.xxx'</p>
+                                <p><b>(2) 进入目录，例如E盘hycdes：</b></p>
+                                <p>cd e:/hycdes</p>
+                                <p><b>(3) 设为仓库，随后文件夹会生成隐藏文件.git：</b></p>
+                                <p>git init</p>
+                                <p><b>(4) 生成本机SSH Key，并复制添加到github-setting-SSH and GPG keys里：</b></p>
+                                <p>ssh-keygen -t rsa -C 'xxx@xx.xxx'</p>
+                                <p><b>(5) 添加远程仓库地址，进入github找到仓库，绿色按钮clone or download，复制里面的地址xxxx：</b></p>
+                                <p>git remote add origin xxxx</p>
+                                <p><b>(6) 在文件夹里添加文件：</b></p>
+                                <p><b>(7) 添加文件：</b></p>
+                                <p>git add .</p>
+                                <p><b>(8) 提交信息：</b></p>
+                                <p>git commit -m 'xxxxxx'</p>
+                                <p><b>(9) 同步上去，-u第一次用，后来可以省去：</b></p>
+                                <p>git push -u origin master</p>
+                                <p>&nbsp</p>
+                                <p><b>(ex) 复制clone地址，下载到本地：</b></p>
+                                <p>cd e:/download</p>
+                                <p>git clone xxxx</p>
+                            </div>
+                            <div class="panel-footer">
+                                git:basic
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
