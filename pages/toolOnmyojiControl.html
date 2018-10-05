@@ -9,6 +9,113 @@
     <meta name="author" content="">
     <title>hycdes blog</title>
 
+    <script type="text/javascript">
+        function setShiki_SSR1() {
+            var CtrSoft = document.getElementById('CtrSoft'); CtrSoft.value = 0;
+            var CtrHard = document.getElementById('CtrHard'); CtrHard.value = 0;
+            var CtrNum = document.getElementById('CtrNum'); CtrNum.value = 4;
+        }
+        function setShiki_SSR2() {
+            var CtrSoft = document.getElementById('CtrSoft'); CtrSoft.value = 1;
+            var CtrHard = document.getElementById('CtrHard'); CtrHard.value = 0.5;
+            var CtrNum = document.getElementById('CtrNum'); CtrNum.value = 1;
+        }
+        function setShiki_SSR3() {
+            var CtrSoft = document.getElementById('CtrSoft'); CtrSoft.value = 0;
+            var CtrHard = document.getElementById('CtrHard'); CtrHard.value = 0;
+            var CtrNum = document.getElementById('CtrNum'); CtrNum.value = 1;
+        }
+        function setShiki_SR1() {
+            var CtrSoft = document.getElementById('CtrSoft'); CtrSoft.value = 0.08;
+            var CtrHard = document.getElementById('CtrHard'); CtrHard.value = 0;
+            var CtrNum = document.getElementById('CtrNum'); CtrNum.value = 3;
+        }
+        function setShiki_SR2() {
+            var CtrSoft = document.getElementById('CtrSoft'); CtrSoft.value = 0;
+            var CtrHard = document.getElementById('CtrHard'); CtrHard.value = 0;
+            var CtrNum = document.getElementById('CtrNum'); CtrNum.value = 3;
+        }
+        function setShiki_SR3() {
+            var CtrSoft = document.getElementById('CtrSoft'); CtrSoft.value = 0.4;
+            var CtrHard = document.getElementById('CtrHard'); CtrHard.value = 0;
+            var CtrNum = document.getElementById('CtrNum'); CtrNum.value = 1;
+        }
+        function setShiki_R1() {
+            var CtrSoft = document.getElementById('CtrSoft'); CtrSoft.value = 0.5;
+            var CtrHard = document.getElementById('CtrHard'); CtrHard.value = 0;
+            var CtrNum = document.getElementById('CtrNum'); CtrNum.value = 1;
+        }
+        function setShiki_R2() {
+            var CtrSoft = document.getElementById('CtrSoft'); CtrSoft.value = 0;
+            var CtrHard = document.getElementById('CtrHard'); CtrHard.value = 0.08;
+            var CtrNum = document.getElementById('CtrNum'); CtrNum.value = 3;
+        }
+        function getCalculate(P_CtrSoft, P_CtrHard) {
+            var Result_Soft = document.getElementById("Result_Soft");
+            var Result_Hard = document.getElementById("Result_Hard");
+            var Info_Soft = "控制概率（可驱散）：";
+            var Info_Hard = "控制概率（不可驱散）：";
+            if (isNaN(P_CtrSoft) || isNaN(P_CtrHard)) {
+                Info_Soft = "某个输入缺失，或是非数字";
+                Info_Hard = "某个输入缺失，或是非数字";
+            } else {
+                Info_Soft += P_CtrSoft + ""; Info_Soft += "%";
+                Info_Hard += P_CtrHard + ""; Info_Hard += "%";
+            }
+            Result_Soft.innerHTML = Info_Soft;
+            Result_Hard.innerHTML = Info_Hard;
+        }
+        function getResult() {
+            var GTMS = document.getElementById('Gotamashi');
+            var idx = GTMS.selectedIndex;
+            var gtms = parseFloat(GTMS[idx].value);
+            var CtrSoft = document.getElementById('CtrSoft');
+            var CtrHard = document.getElementById('CtrHard');
+            var P_CtrSoft_single_skill = parseFloat(CtrSoft.value);
+            var P_CtrHard_single_skill = parseFloat(CtrHard.value);
+            var CtrNum = document.getElementById('CtrNum');
+            var EffectHit = document.getElementById('EffectHit');
+            var EffectResist = document.getElementById('EffectResist');
+            var P_CtrSoft_single_gtms;
+            var P_CtrHard_single_gtms;
+            switch (gtms) {
+                case 0:
+                    P_CtrSoft_single_gtms = 0.0;
+                    P_CtrHard_single_gtms = 0.0;
+                    break;
+                case 1:
+                    P_CtrSoft_single_gtms = 0.25;
+                    P_CtrHard_single_gtms = 0.0;
+                    break;
+                case 2:
+                    P_CtrSoft_single_gtms = 0.125;
+                    P_CtrHard_single_gtms = 0.0625;
+                    break;
+                case 3:
+                    P_CtrSoft_single_gtms = 0.12;
+                    P_CtrHard_single_gtms = 0.0;
+                    break;
+                case 4:
+                    P_CtrSoft_single_gtms = 0.0;
+                    P_CtrHard_single_gtms = 0.08;
+                    break;
+                case 5:
+                    P_CtrSoft_single_gtms = 0.0;
+                    P_CtrHard_single_gtms = 0.25;
+                    break;
+            }
+            P_CtrSoft_single_gtms *= (1.0 + parseFloat(EffectHit.value)) / (1.0 + parseFloat(EffectResist.value));
+            P_CtrHard_single_gtms *= (1.0 + parseFloat(EffectHit.value)) / (1.0 + parseFloat(EffectResist.value));
+            P_CtrSoft_single_skill *= (1.0 + parseFloat(EffectHit.value)) / (1.0 + parseFloat(EffectResist.value));
+            P_CtrHard_single_skill *= (1.0 + parseFloat(EffectHit.value)) / (1.0 + parseFloat(EffectResist.value));
+            var P_CtrSoft = 1.0 - Math.pow(1.0 - P_CtrSoft_single_skill, parseFloat(CtrNum.value)) * Math.pow(1.0 - P_CtrSoft_single_gtms, parseFloat(CtrNum.value));
+            var P_CtrHard = 1.0 - Math.pow(1.0 - P_CtrHard_single_skill, parseFloat(CtrNum.value)) * Math.pow(1.0 - P_CtrHard_single_gtms, parseFloat(CtrNum.value));
+            P_CtrSoft = P_CtrSoft.toFixed(2); P_CtrSoft *= 100;
+            P_CtrHard = P_CtrHard.toFixed(2); P_CtrHard *= 100;
+            getCalculate(P_CtrSoft, P_CtrHard);
+        }
+    </script>
+
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -283,16 +390,74 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Flash</h1>
+                        <h1 class="page-header">命中抵抗计算</h1>
                     </div>
                 </div>
 
                 <!-- /.row -->
                 <div class="row">
-                    <div class="col-lg-12">
-                        <embed src="../flash/MainFlash.swf" width="1024" height="768">
-                    </div>
+                    <form class="form-horizontal" role="form">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <h4>常用式神模版</h4>
+                                <p>
+                                    <button type="button" class="btn btn-default" onclick="setShiki_SSR1()"><span style="color:darkorange">大天狗</span></button>
+                                    <button type="button" class="btn btn-default" onclick="setShiki_SSR2()"><span style="color:darkorange">阎魔</span></button>
+                                    <button type="button" class="btn btn-default" onclick="setShiki_SSR3()"><span style="color:darkorange">彼岸花</span></button>
+                                    <button type="button" class="btn btn-default" onclick="setShiki_SR1()"><span style="color:blueviolet">雪女</span></button>
+                                    <button type="button" class="btn btn-default" onclick="setShiki_SR2()"><span style="color:blueviolet">鬼使白</span></button>
+                                    <button type="button" class="btn btn-default" onclick="setShiki_SR3()"><span style="color:blueviolet">般若</span></button>
+                                    <button type="button" class="btn btn-default" onclick="setShiki_R1()"><span style="color:deepskyblue">兵俑</span></button>
+                                    <button type="button" class="btn btn-default" onclick="setShiki_R2()"><span style="color:deepskyblue">山童</span></button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <h4>式神技能数据</h4>
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">技能控制概率(<span style="color:#FF0066">可驱散</span>)&nbsp&nbsp&nbsp&nbsp</span>
+                                <input type="text" class="form-control" placeholder="输入小数，如冰冻、沉默、混乱" id="CtrSoft">
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">技能控制概率(<span style="color:#FF0066">不可驱散</span>)</span>
+                                <input type="text" class="form-control" placeholder="输入小数，如眩晕、狸猫嘲讽" id="CtrHard">
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">技能攻击次数&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                                <input type="text" class="form-control" placeholder="输入整数" id="CtrNum">
+                            </div>
+                            <div class="form-group">
+                                <h4>装备属性</h4>
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">我方效果命中</span>
+                                <input type="text" class="form-control" placeholder="输入小数" id="EffectHit">
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">敌方效果抵抗</span>
+                                <input type="text" class="form-control" placeholder="输入小数" id="EffectResist">
+                            </div>
+                            <select class="form-control" id="Gotamashi">
+                                <option value=0>无控制御魂</option>
+                                <option value=1>魅妖 (25% 混乱)</option>
+                                <option value=2>魍魉之匣 (25% 随机沉默、眩晕、混乱、75%弱疗)</option>
+                                <option value=3>雪幽魂 (12% 冰冻)</option>
+                                <option value=4>钟灵 (8% 眩晕)</option>
+                                <option value=5>返魂香 (25% 眩晕)</option>
+                            </select>
+                            <p>&nbsp</p>
+                            <p><button type="button" class="btn btn-info" onclick="getResult()">计算结果</button></p>
+                            <div class="form-group">
+                                <div class="alert alert-info" id="Result_Soft">控制概率（可驱散）将在这里显示</div>
+                                <div class="alert alert-danger" id="Result_Hard">控制概率（不可驱散）将在这里显示</div>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
+
             </div>
         </div>
 

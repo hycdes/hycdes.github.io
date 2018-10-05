@@ -10,6 +10,11 @@
     <title>hycdes blog</title>
 
     <script type="text/javascript">
+        window.onload = function () {
+            var chart = document.getElementById("rankingChart");
+            var tab = '点击 <span style="color:deepskyblue">按条件排序</span> 按钮，排序前十的结果将在这里显示';
+            chart.innerHTML = tab;
+        }
         function creatLogiData(ilevel, impw, iamm, irat, iprt, iitm1, iitm2, itime) {
             var logiData = new Object;
             logiData.level = ilevel;
@@ -133,11 +138,12 @@
                 return false;
             }
         }
-        function getChart(logiList, it1, it2) {
+        function getChart(logiList, it1, it2, it1_text, it2_text) {
+            var allEntry = 0;
             var chart = document.getElementById("rankingChart");
-            var tab = "<thead><tr><th>排行</th><th>关卡</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>道具1</th><th>道具2</th><th>时间(h)</th></tr></thead>";
-            tab += "<tbody>";
-            for (var i = 0, allEntry = 0; i < 44 && allEntry < 10; i++) {
+            var tab = '<table class="table table-striped table-bordered table-hover"><thead><tr><th>排行</th><th>关卡</th><th>人力/h</th><th>弹药/h</th><th>口粮/h</th><th>零件/h</th><th>道具1</th><th>道具2</th><th>时间(h)</th></tr></thead>';
+            tab += '<tbody>';
+            for (var i = 0; i < 44 && allEntry < 10; i++) {
                 if (haveItem(it1, it2, logiList[i])) {
                     tab += "<tr>";
                     tab += "<td>"; tab += ((allEntry + 1) + ""); tab += "</td>";
@@ -153,10 +159,15 @@
                     allEntry++;
                 }
             }
+            tab += '</tbody></table>';
             if (allEntry === 0) {
-                tab += "<tr><td>没有符合条件的后勤</td></tr>";
+                tab = "";
+                tab += '没有既包含 <span style="color:#FF0066">';
+                tab += it1_text;
+                tab += '</span> 又包含<span style="color:#FF0066"> ';
+                tab += it2_text;
+                tab += " </span>的后勤条目";
             }
-            tab += "</tbody>";
             chart.innerHTML = tab;
         }
         function getRanking() {
@@ -167,9 +178,11 @@
             var Itm1 = document.getElementById('ItemNeed1');
             var idx1 = Itm1.selectedIndex;
             var it1 = parseInt(Itm1[idx1].value);
+            var it1_text = Itm1[idx1].text;
             var Itm2 = document.getElementById('ItemNeed2');
             var idx2 = Itm2.selectedIndex;
             var it2 = parseInt(Itm2[idx2].value);
+            var it2_text = Itm2[idx2].text;
             var logiList = [];
             logiList.push(creatLogiData("0-1", 0, 174, 174, 0, "快速修复", "快速建造", 0.83));
             logiList.push(creatLogiData("0-2", 183.3, 0, 0, 116.7, "人型契约", "—", 3));
@@ -226,7 +239,7 @@
                 }
                 else return 1;
             });
-            getChart(logiList, it1, it2);
+            getChart(logiList, it1, it2, it1_text, it2_text);
         }
     </script>
 
@@ -249,7 +262,6 @@
 </head>
 
 <body>
-
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -262,7 +274,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="index.html">Blog of <span style="color:#FF0066">Hycdes Mactavish</span>
-                    v1.2</a>
+                    v1.3</a>
             </div>
 
             <!-- DropDown (up-right) -->
@@ -481,8 +493,15 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li>
+                                    <a href="#">阴阳师 Onmyoji<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="toolOnmyojiControl.html">命中抵抗计算</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
 
                     </ul>
@@ -505,26 +524,10 @@
                 <div class="row">
                     <form class="form-horizontal" role="form">
                         <!--Weight-->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <h4>人力比重(Manpower weight)</h4>
-                                <input class="form-control" placeholder="输入一个整数" id="Mw">
-                            </div>
-                            <div class="form-group">
-                                <h4>弹药比重(Ammunition weight)</h4>
-                                <input class="form-control" placeholder="输入一个整数" id="Aw">
-                            </div>
-                            <div class="form-group">
-                                <h4>口粮比重(Ration weight)</h4>
-                                <input class="form-control" placeholder="输入一个整数" id="Rw">
-                            </div>
-                            <div class="form-group">
-                                <h4>零件比重(Parts weight)</h4>
-                                <input class="form-control" placeholder="输入一个整数" id="Pw">
-                            </div>
+                        <div class="col-lg-12">
+                            *排序依据：按后勤各项资源每小时获取量乘权重的总和降序排序，对什么资源需求更大可调高其权重
                         </div>
-
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <h4>快捷配比</h4>
                             <p>
                                 <button type="button" class="btn btn-default" onclick="setWeight1()">等比1:1:1:1</button>
@@ -564,6 +567,29 @@
                             </p>
                             <p><button type="button" class="btn btn-info" onclick="getRanking()">按条件排序</button></p>
                         </div>
+
+                        <div class="col-lg-4">
+                            <h4>资源权重</h4>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">人力比重(Manpower weight)&nbsp&nbsp</span>
+                                <input type="text" class="form-control" placeholder="输入整数" id="Mw">
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">弹药比重(Ammunition weight)</span>
+                                <input type="text" class="form-control" placeholder="输入整数" id="Aw">
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">口粮比重(Ration
+                                    weight)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                                <input type="text" class="form-control" placeholder="输入整数" id="Rw">
+                            </div>
+                            <div class="form-group input-group">
+                                <span class="input-group-addon">零件比重(Parts
+                                    weight)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                                <input type="text" class="form-control" placeholder="输入整数" id="Pw">
+                            </div>
+                        </div>
+
                     </form>
                 </div>
 
@@ -575,10 +601,7 @@
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover" id="rankingChart">
-                                    </table>
-                                </div>
+                                <div class="table-responsive" id="rankingChart"></div>
                                 <!-- /.table-responsive -->
                             </div>
                             <!-- /.panel-body -->
