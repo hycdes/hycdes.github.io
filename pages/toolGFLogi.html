@@ -169,13 +169,41 @@
             tab += '</tbody></table>';
             if (allEntry === 0) {
                 tab = "";
-                tab += '没有既包含 <span style="color:#FF0066">';
-                tab += it1_text;
-                tab += '</span> 又包含<span style="color:#FF0066"> ';
-                tab += it2_text;
-                tab += ' </span>并且时间长于 <span style="color:#FF0066">';
-                tab += TimeRequire;
-                tab += '</span> 的后勤条目';
+                if (it1_text != '无' && it2_text != '无') {
+                    if (it1_text != it2_text) {
+                        tab += '没有既包含 <span style="color:#FF0066">';
+                        tab += it1_text;
+                        tab += '</span> 又包含<span style="color:#FF0066"> ';
+                        tab += it2_text;
+                        tab += ' </span>并且时间长于 <span style="color:#FF0066">';
+                        tab += TimeRequire;
+                        tab += '</span> 小时的后勤条目';
+                    } else {
+                        tab += '没有包含 <span style="color:#FF0066">';
+                        tab += it1_text;
+                        tab += ' </span>并且时间长于 <span style="color:#FF0066">';
+                        tab += TimeRequire;
+                        tab += '</span> 小时的后勤条目';
+                    }
+                } else if (it1_text === '无' && it2_text === '无') {
+                    tab += '没有时间长于 <span style="color:#FF0066">';
+                    tab += TimeRequire;
+                    tab += '</span> 小时的后勤条目';
+                } else {
+                    if (it1_text === '无') {
+                        tab += '没有包含 <span style="color:#FF0066">';
+                        tab += it2_text;
+                        tab += ' </span>并且时间长于 <span style="color:#FF0066">';
+                        tab += TimeRequire;
+                        tab += '</span> 小时的后勤条目';
+                    } else {
+                        tab += '没有包含 <span style="color:#FF0066">';
+                        tab += it1_text;
+                        tab += ' </span>并且时间长于 <span style="color:#FF0066">';
+                        tab += TimeRequire;
+                        tab += '</span> 小时的后勤条目';
+                    }
+                }
             }
             chart.innerHTML = tab;
         }
@@ -209,7 +237,7 @@
             logiList.push(creatLogiData("2-4", 0, 41.7, 100, 10, "人型契约", "—", 6));
             logiList.push(creatLogiData("3-1", 150, 0, 225, 0, "—", "—", 0.33));
             logiList.push(creatLogiData("3-2", 0, 160, 93.3, 40, "—", "—", 0.75));
-            logiList.push(creatLogiData("3-3", 0, 0, 200, 0, "快速修复", "快速建造", 1.5));
+            logiList.push(creatLogiData("3-3", 0, 200, 0, 0, "快速修复", "快速建造", 1.5));
             logiList.push(creatLogiData("3-4", 0, 0, 60, 60, "人型契约", "装备契约", 5));
             logiList.push(creatLogiData("4-1", 0, 185, 185, 0, "装备契约", "—", 1));
             logiList.push(creatLogiData("4-2", 0, 0, 0, 105, "快速建造", "—", 2));
