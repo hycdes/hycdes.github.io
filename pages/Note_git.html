@@ -149,65 +149,58 @@
 
             <!-- Main Pages -->
             <div id="page-wrapper">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">主页(Home)</h1>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                更新公告 Update Info
-                            </div>
-                            <div class="panel-body">
-                                <p>技术笔记 v2.0</p>
-                                <p>* 笔记移植 (<span style="color:#FF0066">New</span>)</p>
-                            </div>
-                            <div class="panel-footer">
-                                Update in 2018.12.19
-                            </div>
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">git</h1>
                         </div>
-                    </div>
-                    <!-- 4-pages tab -->
-                    <div class="col-lg-5">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                关于我 About Me
-                            </div>
-                            <div class="panel-body">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#home"
-                                            data-toggle="tab">基本信息</a>
-                                    </li>
-                                    <li><a href="#connect" data-toggle="tab">与我交流</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade in active"
-                                        id="home">
-                                        <h4>命运の乐章 Fatal Chapter</h4>
-                                        <p>研究领域：计算机/软件 → 高性能计算/网络优化</p>
-                                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp→
-                                            网络功能虚拟化(<span
-                                                style="color:dodgerblue"><a
-                                                    href="https://portal.etsi.org/nfv/nfv_white_paper.pdf"
-                                                    target="view_window">NFV</a></span>,
-                                            Network Function Virtualization)</p>
-                                        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp→
-                                            虚拟网络功能资源分配(VNF-RA)</p>
-                                    </div>
-                                    <div class="tab-pane fade" id="connect">
-                                        <h4>联系方式</h4>
-                                        <p><span style="color:dodgerblue">Official</span>:
-                                            hycdes@sjtu.edu.cn</p>
-                                        <p><span style="color:#FF0066">Personal</span>:
-                                            hycdes@qq.com</p>
-                                    </div>
+                        <div class="col-lg-6">
+                            <div class="panel panel-red">
+                                <div class="panel-heading">
+                                    git开始使用和基本方法
+                                </div>
+                                <div class="panel-body">
+                                    <p><b>(1) 本机首次使用git需要设定上自己的github帐号：</b></p>
+                                    <p>git config --global user.name 'xxxxx'</p>
+                                    <p>git config --global user.email
+                                        'xxx@xx.xxx'</p>
+                                    <p><b>(2) 进入目录，例如E盘hycdes：</b></p>
+                                    <p>cd e:/hycdes</p>
+                                    <p><b>(3) 设为仓库，随后文件夹会生成隐藏文件.git：</b></p>
+                                    <p>git init</p>
+                                    <p><b>(4) 生成本机SSH
+                                            Key，并复制添加到github-setting-SSH and GPG
+                                            keys里：</b></p>
+                                    <p>ssh-keygen -t rsa -C 'xxx@xx.xxx'</p>
+                                    <p><span
+                                            style="color:#FF0066">*注意：该命令将在当前目录生成privateKey和publicKey文件，请务必放在默认目录下(Windows即C:\Users\xxxx\.ssh\)</span></p>
+                                    <p><b>(5) 添加远程仓库地址，进入github找到仓库，绿色按钮clone or
+                                            download，复制里面的地址xxxx：</b></p>
+                                    <p>git remote add origin xxxx</p>
+                                    <p><span
+                                            style="color:#FF0066">*注意：github.io个人主页绑定其他域名后仓库会生成CLIKE文件，需要再次pull，否则push会报错</span></p>
+                                    <p><b>(6) 在文件夹里添加文件：</b></p>
+                                    <p>git pull origin master</p>
+                                    <p><b>(7) 添加文件：</b></p>
+                                    <p>git add .</p>
+                                    <p><b>(8) 提交信息：</b></p>
+                                    <p>git commit -m 'xxxxxx'</p>
+                                    <p><b>(9) 同步上去，-u第一次用，后来可以省去：</b></p>
+                                    <p>git push -u origin master</p>
+                                    <p>&nbsp</p>
+                                    <p><b>(ex) 复制clone地址，下载到本地：</b></p>
+                                    <p>cd e:/download</p>
+                                    <p>git clone xxxx</p>
+                                </div>
+                                <div class="panel-footer">
+                                    git:basic
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -215,14 +208,13 @@
 
         <!-- jQuery -->
         <script src="../vendor/jquery/jquery.min.js"></script>
+
         <!-- Bootstrap Core JavaScript -->
         <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
         <!-- Metis Menu Plugin JavaScript -->
         <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-        <!-- Morris Charts JavaScript -->
-        <script src="../vendor/raphael/raphael.min.js"></script>
-        <script src="../vendor/morrisjs/morris.min.js"></script>
-        <script src="../data/morris-data.js"></script>
+
         <!-- Custom Theme JavaScript -->
         <script src="../dist/js/sb-admin-2.js"></script>
 
